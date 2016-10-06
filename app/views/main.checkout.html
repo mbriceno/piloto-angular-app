@@ -1,0 +1,60 @@
+<h1>Carrito de compras</h1>
+<form action="http://opencart2.dev/index.php?route=checkout/cart/edit" method="post" enctype="multipart/form-data">
+	<div class="table-responsive">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<td class="text-center">Imagen</td>
+					<td class="text-left">Nombre de Producto</td>
+					<td class="text-left">Cantidad</td>
+					<td class="text-right">Precio Unitario</td>
+					<td class="text-right">Total</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="prd in productos">
+					<td class="text-center">
+						<img width="57" src="{{prd.img}}" alt="{{prd.name}}" title="{{prd.name}}" class="img-thumbnail">
+					</td>
+					<td class="text-left">
+						{{prd.name}}
+					</td>
+					<td class="text-left">
+						<div class="input-group btn-block" style="max-width: 200px;">
+							<input type="text" name="quantity" value="{{prd.quantity}}" ng-model="prd.quantity" size="1" class="form-control">
+							<span class="input-group-btn quantity-btn">
+								<button type="button" ng-click="deleteItem($index)" data-toggle="tooltip" title="" class="btn btn-danger"  title="Eliminar"><i class="fa fa-times-circle"></i></button>
+							</span>
+						</div>
+					</td>
+					<td class="text-right">{{prd.price | currency : "$ " : 2 }}</td>
+					<td class="text-right">{{calculateTotal(prd) | currency : "$ " : 2 }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</form>
+<div class="row">
+	<div class="col-sm-4 col-sm-offset-8">
+		<table class="table table-bordered">
+			<tbody>
+				<tr>
+					<td class="text-right"><strong>Sub-Total:</strong></td>
+					<td class="text-right">{{subTotal | currency : "$ " : 2 }}</td>
+				</tr>
+				<tr>
+					<td class="text-right"><strong>Total:</strong></td>
+					<td class="text-right">{{total | currency : "$ " : 2 }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="buttons">
+	<div class="pull-left">
+		<a ui-sref="main.home" class="btn btn-default">Continuar Comprando</a>
+	</div>
+	<div class="pull-right">
+		<a href="#" class="btn btn-primary">Comprar</a>
+	</div>
+</div>

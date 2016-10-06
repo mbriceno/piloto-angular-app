@@ -1,0 +1,14 @@
+/node_modules
+/dist
+/.tmp
+/.sass-cache
+/bower_components
+/.idea
+app/bower_components
+npm-debug.log
+app/styles/main.css
+/extra
+/test
+/config
+.editorconfig
+.gitlab-ci.yml

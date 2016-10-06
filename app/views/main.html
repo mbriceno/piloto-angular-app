@@ -1,0 +1,65 @@
+<div class="content-form">
+	<form class="form-inline">
+		<div class="form-group">
+			<input type="text" class="form-control" ng-model="stringFilter" name="stringFilter" id="stringFilter" placeholder="Búscar">
+		</div>
+		<div class="form-group">
+			<select class="form-control" id="category" name="category" ng-model="filterCategory" ng-options="c as c.name for c in categorias" >
+				<option value="" selected>Categorías</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<select class="form-control" id="ofilter" name="ofilter" ng-model="otherFilters">
+				<option value="" selected="selected" >Filtar</option>
+				<option value="disponible" >For Sale</option>
+				<option value="agotado" >Out of Stock</option>
+				<option value="mas_vendidos" >Best Seller</option>
+				<option value="lg_30" >Precio mayor a 30.000</option>
+				<option value="lt_10" >Precio menor a 10.000</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label>Ordernar por: </label>
+			<button class="btn btn-info" ng-click="sortBy('name')" type="button">
+				Por Nombre <span class="sortorder" ng-show="sortCriterial === 'name'" ng-class="{reverse: reverse}"></span>
+			</button>
+			<button class="btn btn-primary" ng-click="sortBy('price')" type="button">
+				Por Precio <span class="sortorder" ng-show="sortCriterial === 'price'" ng-class="{reverse: reverse}"></span>
+			</button>
+		</div>
+		<div class="form-group">
+			<div id="cart" class="btn-group btn-block">
+	  			<button type="button" ng-click="checkout()" class="btn btn-inverse btn-block dropdown-toggle" aria-expanded="false">
+	  				<i class="fa fa-shopping-cart"></i>
+	  				<span id="cart-total">Ir al Carrito</span>
+	  			</button>
+			</div>	
+		</div>
+		
+	</form>	
+</div>
+<div class="row">
+	<div class="product-layout col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-repeat="prd in productos | filter:{name:stringFilter} | filter:categoryMatch(filterCategory) | filter:criteriaMatch(otherFilters) | orderBy:sortCriterial:reverse">
+    	<div class="product-thumb transition">
+      		<div class="image">
+      			<a href="#">
+        			<img src="{{prd.img}}">
+        		</a>
+        	</div>
+      		<div class="caption">
+            	<h4>
+            		<a href="#">{{prd.name}}</a>
+            	</h4>
+        		<p>{{prd.description}}</p>
+                <p class="price">{{prd.price | currency : "$ " : 2 }} <span ng-class="prd.available?'in_stock':'out_stock'" >{{prd.available ? 'In Stock':'Out of stock'}}</span></p>
+                <p>{{prd.best_seller? 'Best Seller':''}}</p>
+                <p ng-bind-html="showCategories(prd.categories)"></p>
+			</div>
+			<div class="button-group">
+				<button type="button" ng-click="addTocart(prd)">
+					<i class="fa fa-shopping-cart"></i> 
+					<span class="">Añadir al Carro</span></button>
+			</div>
+    	</div>  
+  	</div>
+</div>
